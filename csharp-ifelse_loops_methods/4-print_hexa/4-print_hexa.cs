@@ -10,7 +10,7 @@ namespace _4_print_hexa
         
             while (i <= 98)
             {
-                Console.Write("{0} = 0x{0:X}\n", i, i);
+                Console.Write("{0} = 0x{0:x}\n", i, i);
                 i++;
             }
         }
