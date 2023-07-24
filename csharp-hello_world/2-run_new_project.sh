@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-project_name="1-new_project"
+project_name="2-new_project"
 mkdir "$project_name"
 
 cd "$project_name"
