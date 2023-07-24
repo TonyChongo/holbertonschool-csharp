@@ -1,12 +1,1 @@
-using System;
-
-namespace _3_writeline
-{
-    class _3_writeline
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("\"Programming is like building a multilingual puzzle\n");
-        }
-    }
-}
+Console.WriteLine("\"Programming is like building a multilingual puzzle\n");
