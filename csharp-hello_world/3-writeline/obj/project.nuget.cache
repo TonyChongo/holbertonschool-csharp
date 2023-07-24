@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "L3oE8Xof6MLaUMkPd8ZQc1n1QJsKISuq6MoMCzHH5cgs5mLVpxqdHaWmyADqICZyDQQvn3B5Vnw9YRKIVDl4XA==",
+  "dgSpecHash": "zLVc/QYpUoddiFUxWnyWN+cO6/GSGs+Ak+d5zX8K26NWLUJn/ykWkQkD8kq70sJsdJevtUoEHuRaSLoRlxDKtw==",
   "success": true,
-  "projectFilePath": "/Users/tonychong/Developpement/Holberton/holbertonschool-csharp/csharp-hello_world/3-writeline/3-writeline.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\Holberton School\\Specializations curriculum\\TASKS\\C# Tasks\\0x00-csharp-hello_world (Currency CHECK IN 9)\\3-writeline\\3-writeline.csproj",
+  "expectedPackageFiles": [
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.app\\2.1.0\\microsoft.netcore.app.2.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.dotnetapphost\\2.1.0\\microsoft.netcore.dotnetapphost.2.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.dotnethostpolicy\\2.1.0\\microsoft.netcore.dotnethostpolicy.2.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.dotnethostresolver\\2.1.0\\microsoft.netcore.dotnethostresolver.2.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\2.1.0\\microsoft.netcore.platforms.2.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.targets\\2.1.0\\microsoft.netcore.targets.2.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

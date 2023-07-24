@@ -1,30 +1,35 @@
 {
   "format": 1,
   "restore": {
-    "/Users/tonychong/Developpement/Holberton/holbertonschool-csharp/csharp-hello_world/3-writeline/3-writeline.csproj": {}
+    "D:\\Holberton School\\Specializations curriculum\\TASKS\\C# Tasks\\0x00-csharp-hello_world (Currency CHECK IN 9)\\3-writeline\\3-writeline.csproj": {}
   },
   "projects": {
-    "/Users/tonychong/Developpement/Holberton/holbertonschool-csharp/csharp-hello_world/3-writeline/3-writeline.csproj": {
+    "D:\\Holberton School\\Specializations curriculum\\TASKS\\C# Tasks\\0x00-csharp-hello_world (Currency CHECK IN 9)\\3-writeline\\3-writeline.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tonychong/Developpement/Holberton/holbertonschool-csharp/csharp-hello_world/3-writeline/3-writeline.csproj",
+        "projectUniqueName": "D:\\Holberton School\\Specializations curriculum\\TASKS\\C# Tasks\\0x00-csharp-hello_world (Currency CHECK IN 9)\\3-writeline\\3-writeline.csproj",
         "projectName": "3-writeline",
-        "projectPath": "/Users/tonychong/Developpement/Holberton/holbertonschool-csharp/csharp-hello_world/3-writeline/3-writeline.csproj",
-        "packagesPath": "/Users/tonychong/.nuget/packages/",
-        "outputPath": "/Users/tonychong/Developpement/Holberton/holbertonschool-csharp/csharp-hello_world/3-writeline/obj/",
+        "projectPath": "D:\\Holberton School\\Specializations curriculum\\TASKS\\C# Tasks\\0x00-csharp-hello_world (Currency CHECK IN 9)\\3-writeline\\3-writeline.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "D:\\Holberton School\\Specializations curriculum\\TASKS\\C# Tasks\\0x00-csharp-hello_world (Currency CHECK IN 9)\\3-writeline\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/Users/tonychong/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "netcoreapp2.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "netcoreapp2.1": {
+            "targetAlias": "netcoreapp2.1",
             "projectReferences": {}
           }
         },
@@ -35,25 +40,27 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "netcoreapp2.1": {
+          "targetAlias": "netcoreapp2.1",
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
           "imports": [
             "net461",
             "net462",
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/7.0.100/libexec/sdk/7.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
