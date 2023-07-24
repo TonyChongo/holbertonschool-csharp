@@ -7,3 +7,4 @@ cd "$project_name"
 
 dotnet new console
 dotnet build
+dotnet run
