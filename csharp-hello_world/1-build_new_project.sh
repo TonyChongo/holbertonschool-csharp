@@ -6,4 +6,4 @@ mkdir "$project_name"
 cd "$project_name"
 
 dotnet new console
-dotnet run
+dotnet build
