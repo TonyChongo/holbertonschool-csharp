@@ -12,7 +12,7 @@ namespace _5_print_comb
             {
                 Console.Write("{0:D2}", i);
                 if (i < 99)
-                Console.Write(", ");
+                    Console.Write(", ");
             }
         }
     }
