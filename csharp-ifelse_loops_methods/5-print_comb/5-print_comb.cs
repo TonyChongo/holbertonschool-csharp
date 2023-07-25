@@ -6,14 +6,12 @@ namespace _5_print_comb
     {
         static void Main(string[] args)
         {
-            int i;
-        
-            for (i = 0; i < 100; i++)
+            string output = "";
+            for (int i = 0; i < 100; i++)
             {
-                Console.Write("{0:D2}", i);
-                if (i < 99)
-                    Console.Write(", ");
+                output += $"{i:D2}{(i < 99 ? ", " : "\n")}";
             }
+            Console.Write(output);
         }
     }
 }
