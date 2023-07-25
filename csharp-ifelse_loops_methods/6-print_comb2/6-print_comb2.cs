@@ -6,21 +6,18 @@ namespace _6_print_comb2
     {
         static void Main(string[] args)
         {
-            int first;
-            int second;
-
-            for (first = 0; first < 9; first++)
+            int count = 0;
+            for (int i = 0; i < 10; i++)
             {
-                for (second = first + 1; second <= 9; second++)
+                for (int j = i; j < 10; j++)
                 {
-                    Console.Write("{0}{1}", first, second);
-                    if (first < 8 || second < 9)
+                    if (i != j)
                     {
-                        Console.Write(", ");
+                        Console.Write($"{i}{j}{(count == 44 ? "\n" : ", ")}");
+                        count++;
                     }
                 }
             }
-            Console.Write("\n");
         }
     }
 }
