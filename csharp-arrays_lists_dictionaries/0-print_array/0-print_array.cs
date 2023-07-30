@@ -23,7 +23,11 @@ class Array
 
         for (int i = 0; i < size; i++)
         {
-            Console.Write(newArray[i] + " ");
+            Console.Write(newArray[i]);
+            if (i < size - 1)
+            {
+                Console.Write(" ");
+            }
         }
         Console.WriteLine();
 
