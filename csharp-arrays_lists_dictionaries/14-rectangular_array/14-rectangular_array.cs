@@ -20,10 +20,13 @@ class Program
         {
             for (int j = 0; j < 5; j++)
             {
-                Console.Write(array[i, j] + " ");
+                Console.Write(array[i, j]);
+                if (j < 4)
+                {
+                    Console.Write(" ");
+                }
             }
             Console.WriteLine();
         }
-        Console.WriteLine();
     }
 }
