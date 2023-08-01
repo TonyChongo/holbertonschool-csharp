@@ -6,10 +6,13 @@ class LList
     public static void Delete(LinkedList<int> myLList, int index)
     {
         LinkedListNode<int> currentNode = myLList.First;
-        for (int i = 0; i < index; i++)
+        for (int i = 0; currentNode != null; i++)
         {
+            if (i == index)
+            {
+                myLList.Remove(currentNode);
+            }
             currentNode = currentNode.Next;
         }
-        myLList.Remove(currentNode);
     }
 }
