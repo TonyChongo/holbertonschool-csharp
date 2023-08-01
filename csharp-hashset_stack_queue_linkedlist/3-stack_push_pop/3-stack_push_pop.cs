@@ -12,23 +12,19 @@ class MyStack
             Console.WriteLine("Stack is empty");
 
         bool containsSearch = aStack.Contains(search);
-        Console.WriteLine("Stack contains " + search + ": " + containsSearch);
+        Console.WriteLine("Stack contains \"" + search + "\": " + containsSearch);
 
-        if (containsSearch)
+        if (aStack.Contains(search))
         {
-            Stack<string> tempStack = new Stack<string>();
-            while (aStack.Peek() != search)
+            while (aStack.Count > 0)
             {
-                tempStack.Push(aStack.Pop());
-            }
-            aStack.Pop(); // Remove the search item
-            while (tempStack.Count > 0)
-            {
-                aStack.Push(tempStack.Pop());
+                string currentItem = aStack.Peek();
+                aStack.Pop();
+                if (currentItem == search)
+                    break;
             }
         }
         aStack.Push(newItem);
-
         return aStack;
     }
 }
