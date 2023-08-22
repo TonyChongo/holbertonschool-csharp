@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Text
 {
     /// <summary>
-    /// Class
+    /// Public class
     /// </summary>
     public class Str
     {
@@ -15,26 +15,26 @@ namespace Text
         /// <returns></returns>
         public static int UniqueChar(string s)
         {
-            // Create a dictionary to store the frequency of each character
-            Dictionary<char, int> charFrequency = new Dictionary<char, int>();
+            // Create a dictionary to store character frequencies
+            Dictionary<char, int> charFrequencies = new Dictionary<char, int>();
 
-            // Populate the dictionary with character frequencies
+            // Iterate through the string and populate the character frequencies
             foreach (char c in s)
             {
-                if (charFrequency.ContainsKey(c))
+                if (charFrequencies.ContainsKey(c))
                 {
-                    charFrequency[c]++;
+                    charFrequencies[c]++;
                 }
                 else
                 {
-                    charFrequency[c] = 1;
+                    charFrequencies[c] = 1;
                 }
             }
 
             // Find the index of the first non-repeating character
             for (int i = 0; i < s.Length; i++)
             {
-                if (charFrequency[s[i]] == 1)
+                if (charFrequencies[s[i]] == 1)
                 {
                     return i;
                 }
@@ -43,34 +43,4 @@ namespace Text
             return -1; // No non-repeating character found
         }
     }
-
-    /// <summary>
-    /// Class
-    /// </summary>
-    class Program
-    {
-        /// <summary>
-        /// Prototype
-        /// </summary>
-        /// <param name="args"></param>
-        static void Main(string[] args)
-        {
-            string input = "leetcode";
-            int index = Str.UniqueChar(input);
-            
-            if (index != -1)
-            {
-                Console.WriteLine($"The index of the first non-repeating character in '{input}' is {index}");
-            }
-            else
-            {
-                Console.WriteLine("No non-repeating character found.");
-            }
-        }
-    }
 }
-
-
-
-
-
