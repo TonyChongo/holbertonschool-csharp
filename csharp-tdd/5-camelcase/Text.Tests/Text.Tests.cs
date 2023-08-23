@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using Text;
 
 namespace Text.Tests
 {
@@ -7,19 +6,36 @@ namespace Text.Tests
     public class StrTests
     {
         [Test]
-        public void CamelCase_EmptyString_ReturnsZero()
+        public void CamelCase_EmptyString_ReturnZero()
         {
-            int result = Str.CamelCase("");
-            Assert.AreEqual(0, result);
+            // Arrange
+            string s = "";
+            // Act
+            int wordcount = Str.CamelCase(s);
+            // Assert
+            Assert.AreEqual(wordcount, 0);
         }
 
         [Test]
-        public void CamelCase_MultipleCapitalLetters_ReturnsCorrectCount()
+        public void CamelCase_OneWord_ReturnsOne()
         {
-            int result = Str.CamelCase("countWordsInThisString");
-            Assert.AreEqual(5, result);
+            // Arrange
+            string s = "hello";
+            // Act
+            int wordcount = Str.CamelCase(s);
+            // Assert
+            Assert.AreEqual(wordcount, 1);
         }
 
-        // Add more test cases as needed
+        [Test]
+        public void CamelCase_TwoWords_ReturnsTwo()
+        {
+            // Arrange
+            string s = "helloTony";
+            // Act
+            int wordcount = Str.CamelCase(s);
+            // Assert
+            Assert.AreEqual(wordcount, 2);
+        }
     }
 }
