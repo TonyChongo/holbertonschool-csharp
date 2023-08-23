@@ -1,23 +1,66 @@
 using NUnit.Framework;
-using Text;
+using System.Collections.Generic;
+using System;
 
-namespace TextTests
+namespace Text.Tests
 {
+
     [TestFixture]
-    public class StrTests
+    public class Tests
     {
         [Test]
-        public void TestUniqueChar()
+        public void UniqueChar_allLowerCase_ReturnsIndex()
         {
-            Assert.AreEqual(0, Str.UniqueChar("leetcode"));
-            Assert.AreEqual(2, Str.UniqueChar("loveleetcode"));
-            Assert.AreEqual(-1, Str.UniqueChar("aabbcc"));
+            // Arrange
+            string s = "my name is john";
+            // Act
+            int index = Str.UniqueChar(s);
+            // Assert
+            Assert.AreEqual(index, 1);
         }
 
         [Test]
-        public void TestUniqueChar_EmptyString()
+        public void UniqueChar_SomeUpperCase_ReturnsIndex()
         {
-            Assert.AreEqual(-1, Str.UniqueChar(""));
+            // Arrange
+            string s = "My Name is john";
+            // Act
+            int index = Str.UniqueChar(s);
+            // Assert
+            Assert.AreEqual(index, 0);
+        }
+
+        [Test]
+        public void UniqueChar_NoOccurence_ReturnsMinusOne()
+        {
+            // Arrange
+            string s = "MYLPMYLP";
+            // Act
+            int index = Str.UniqueChar(s);
+            // Assert
+            Assert.AreEqual(index, -1);
+        }
+
+        [Test]
+        public void UniqueChar_LastChar_ReturnsIndex()
+        {
+            // Arrange
+            string s = "GTDJGTDJk";
+            // Act
+            int index = Str.UniqueChar(s);
+            // Assert
+            Assert.AreEqual(index, 8);
+        }
+
+        [Test]
+        public void UniqueChar_EmptyString_ReturnsIndex()
+        {
+            // Arrange
+            string s = "";
+            // Act
+            int index = Str.UniqueChar(s);
+            // Assert
+            Assert.AreEqual(index, -1);
         }
     }
 }
