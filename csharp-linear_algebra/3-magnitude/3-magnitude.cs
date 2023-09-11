@@ -1,12 +1,15 @@
 ﻿using System;
 
+/// <summary>
+/// Public class
+/// </summary>
 public static class VectorMath 
 {
     /// <summary>
-    /// static double Magnitude
+    /// Public static
     /// </summary>
     /// <param name="vector"></param>
-    /// <returns>rounded to the nearest hundredth</returns>
+    /// <returns></returns>
     public static double Magnitude(double[] vector) 
     {
         if (vector == null) 
