@@ -4,7 +4,10 @@ public class VectorMath
 {
     /// <summary>
     /// public static double Magnitude
+    /// 
     /// </summary>
+    /// <param name="vector"></param>
+    /// <returns></returns>
     public static double Magnitude(double[] vector) 
     {
         if (vector == null) 
