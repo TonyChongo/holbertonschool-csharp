@@ -1,38 +1,58 @@
 ﻿using System;
 
 /// <summary>
-/// public class
+/// Public class
 /// </summary>
-public static class MatrixMath
+public class MatrixMath
 {
     /// <summary>
-    /// public static
+    /// Public static
     /// </summary>
     /// <param name="matrix"></param>
     /// <param name="angle"></param>
     /// <returns></returns>
     public static double[,] Rotate2D(double[,] matrix, double angle)
     {
-        int rows = matrix.GetLength(0);
-        int cols = matrix.GetLength(1);
+        int numRows = matrix.GetLength(0);
+        int numCols = matrix.GetLength(1);
 
-        // Ensure it's a square matrix
-        if (rows != cols || (rows != 2 && rows != 3))
+        // Check if the matrix is square and has a valid size
+        if (numRows != numCols || numRows <= 0)
         {
-            return new double[,] { { -1 } };
+            // Return a matrix containing -1 if it's not valid
+            double[,] invalidMatrix = new double[numRows, numCols];
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < numCols; j++)
+                {
+                    invalidMatrix[i, j] = -1;
+                }
+            }
+            return invalidMatrix;
         }
 
-        double[,] rotatedMatrix = new double[rows, cols];
+        // Create the rotation matrix
+        double[,] rotationMatrix = new double[2, 2];
+        rotationMatrix[0, 0] = Math.Cos(angle);
+        rotationMatrix[0, 1] = -Math.Sin(angle);
+        rotationMatrix[1, 0] = Math.Sin(angle);
+        rotationMatrix[1, 1] = Math.Cos(angle);
 
-        for (int i = 0; i < rows; i++)
+        // Multiply the rotation matrix with the input matrix
+        double[,] resultMatrix = new double[numRows, numCols];
+        for (int i = 0; i < numRows; i++)
         {
-            for (int j = 0; j < cols; j++)
+            for (int j = 0; j < numCols; j++)
             {
-                // Apply rotation to each element
-                rotatedMatrix[i, j] = matrix[i, j] * Math.Cos(angle) - matrix[j, i] * Math.Sin(angle);
+                double sum = 0;
+                for (int k = 0; k < numRows; k++)
+                {
+                    sum += rotationMatrix[i, k] * matrix[k, j];
+                }
+                resultMatrix[i, j] = sum;
             }
         }
 
-        return rotatedMatrix;
+        return resultMatrix;
     }
 }
