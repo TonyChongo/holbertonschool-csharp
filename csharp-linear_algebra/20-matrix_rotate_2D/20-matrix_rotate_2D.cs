@@ -17,7 +17,7 @@ public static class MatrixMath
         int cols = matrix.GetLength(1);
 
         // Ensure it's a square matrix
-        if (rows != cols || rows != 2)
+        if (rows != cols || (rows != 2 && rows != 3))
         {
             return new double[,] { { -1 } };
         }
