@@ -10,7 +10,7 @@ public class MatrixMath
     /// </summary>
     /// <param name="matrix"></param>
     /// <returns></returns>
-    public static double Determinant(double[,] matrix)
+    public static double Determinant(double[,] matrix, int decimalPlaces = 2)
     {
         int numRows = matrix.GetLength(0);
         int numCols = matrix.GetLength(1);
@@ -39,6 +39,9 @@ public class MatrixMath
                           (matrix[0, 1] * matrix[1, 0] * matrix[2, 2]) -
                           (matrix[0, 0] * matrix[1, 2] * matrix[2, 1]);
         }
+
+        // Round the determinant to the specified number of decimal places
+        determinant = Math.Round(determinant, decimalPlaces);
 
         return determinant;
     }
