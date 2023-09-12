@@ -1,12 +1,12 @@
 ﻿using System;
 
 /// <summary>
-/// Public class
+/// public class
 /// </summary>
 public static class MatrixMath
 {
     /// <summary>
-    /// Public static
+    /// public static
     /// </summary>
     /// <param name="matrix"></param>
     /// <param name="angle"></param>
@@ -26,11 +26,11 @@ public static class MatrixMath
 
         for (int i = 0; i < rows; i++)
         {
-            double x = matrix[i, 0];
-            double y = matrix[i, 1];
-
-            rotatedMatrix[i, 0] = x * Math.Cos(angle) - y * Math.Sin(angle);
-            rotatedMatrix[i, 1] = x * Math.Sin(angle) + y * Math.Cos(angle);
+            for (int j = 0; j < cols; j++)
+            {
+                // Apply rotation to each element
+                rotatedMatrix[i, j] = matrix[i, j] * Math.Cos(angle) - matrix[j, i] * Math.Sin(angle);
+            }
         }
 
         return rotatedMatrix;
