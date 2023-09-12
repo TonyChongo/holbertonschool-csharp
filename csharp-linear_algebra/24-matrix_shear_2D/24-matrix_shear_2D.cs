@@ -1,9 +1,8 @@
 ﻿using System;
-
 /// <summary>
 /// Public class
 /// </summary>
-public class MatrixMath
+class MatrixMath
 {
     /// <summary>
     /// Public static
@@ -14,62 +13,43 @@ public class MatrixMath
     /// <returns></returns>
     public static double[,] Shear2D(double[,] matrix, char direction, double factor)
     {
+        double[,] error = { { -1 } };
+        
+        if (direction != 'x' && direction != 'y')
+            return error;
+        
         int numRows = matrix.GetLength(0);
         int numCols = matrix.GetLength(1);
 
-        // Check if the matrix is square and has a valid size
-        if (numRows != numCols || numRows <= 0)
+        if (numRows != 2 || numCols != 2)
+            return error;
+
+        double[,] result = new double[2, 2];
+
+        if (direction == 'x')
         {
-            // Return a matrix containing -1 if it's not valid
-            double[,] invalidMatrix = new double[numRows, numCols];
-            for (int i = 0; i < numRows; i++)
+            for (int i = 0; i < 2; i++)
             {
-                for (int j = 0; j < numCols; j++)
-                {
-                    invalidMatrix[i, j] = -1;
-                }
+                double x = matrix[i, 0];
+                double y = matrix[i, 1];
+                double xResult = x + y * factor;
+                result[i, 0] = xResult;
+                result[i, 1] = y;
             }
-            return invalidMatrix;
         }
 
-        double[,] resultMatrix = new double[numRows, numCols];
-
-        if (direction == 'x' || direction == 'X')
+        if (direction == 'y')
         {
-            // Shear in the X direction
-            for (int i = 0; i < numRows; i++)
+            for (int i = 0; i < 2; i++)
             {
-                for (int j = 0; j < numCols; j++)
-                {
-                    resultMatrix[i, j] = matrix[i, j] + (i * factor);
-                }
+                double x = matrix[i, 0];
+                double y = matrix[i, 1];
+                double yResult = y + x * factor;
+                result[i, 0] = x;
+                result[i, 1] = yResult;
             }
-        }
-        else if (direction == 'y' || direction == 'Y')
-        {
-            // Shear in the Y direction
-            for (int i = 0; i < numRows; i++)
-            {
-                for (int j = 0; j < numCols; j++)
-                {
-                    resultMatrix[i, j] = matrix[i, j] + (j * factor);
-                }
-            }
-        }
-        else
-        {
-            // Invalid direction, return a matrix containing -1
-            double[,] invalidDirectionMatrix = new double[numRows, numCols];
-            for (int i = 0; i < numRows; i++)
-            {
-                for (int j = 0; j < numCols; j++)
-                {
-                    invalidDirectionMatrix[i, j] = -1;
-                }
-            }
-            return invalidDirectionMatrix;
         }
 
-        return resultMatrix;
+        return result;
     }
 }
