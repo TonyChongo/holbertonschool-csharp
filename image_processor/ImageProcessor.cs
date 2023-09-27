@@ -1,5 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Drawing;
+using System.Linq;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 /// <summary>
 /// public class ImageProcessor
@@ -88,6 +92,42 @@ public class ImageProcessor
         }
     }
 
+    /// <summary>
+    /// public static void Thumbnail
+    /// </summary>
+    /// <param name="filenames"></param>
+    /// <param name="height"></param>
+    public static void Thumbnail(string[] filenames, int height)
+    {
+        foreach (string filename in filenames)
+        {
+            try
+            {
+                using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite))
+                {
+                    long fileSize = fs.Length;
+                    byte[] imageData = new byte[fileSize];
+
+                    fs.Read(imageData, 0, (int)fileSize);
+
+                    // Calculate the width for the thumbnail based on the aspect ratio
+                    int width = CalculateThumbnailWidth(filename, height);
+
+                    // Create a new byte array for the thumbnail image
+                    byte[] thumbnailData = CreateThumbnail(imageData, width, height);
+
+                    // Save the thumbnail image with the "_th" suffix
+                    string outputFilename = $"{GetFileNameWithoutExtension(filename)}_th{GetFileExtension(filename)}";
+                    File.WriteAllBytes(outputFilename, thumbnailData);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error processing {filename}: {ex.Message}");
+            }
+        }
+    }
+
     private static byte[] InvertColors(byte[] imageData)
     {
         byte[] invertedData = new byte[imageData.Length];
@@ -146,7 +186,61 @@ public class ImageProcessor
         return bwData;
     }
 
+    private static int CalculateThumbnailWidth(string filename, int targetHeight)
+    {
+        try
+        {
+            using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                // Read the image header to determine its dimensions
+                byte[] header = new byte[24];
+                fs.Read(header, 0, 24);
 
+                int width = header[12] + (header[13] << 8) + (header[14] << 16) + (header[15] << 24);
+                int height = header[16] + (header[17] << 8) + (header[18] << 16) + (header[19] << 24);
+
+                double aspectRatio = (double)width / height;
+
+                // Calculate the width for the thumbnail based on the aspect ratio
+                return (int)(targetHeight * aspectRatio);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error while calculating thumbnail width for {filename}: {ex.Message}");
+            return -1; // Return a default value or handle the error accordingly
+        }
+    }
+
+    private static byte[] CreateThumbnail(byte[] imageData, int width, int height)
+    {
+        // Placeholder logic: This code doesn't perform actual image resizing.
+
+        // Calculate the stride (number of bytes per row)
+        int stride = (width * 3 + 3) & ~3; // Assuming 24-bit RGB format
+
+        // Create a new byte array for the thumbnail image
+        byte[] thumbnailData = new byte[stride * height];
+
+        // Placeholder: Copy the original image data to the thumbnail (no resizing)
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                int originalIndex = (y * width + x) * 3;
+                int thumbnailIndex = (y * stride + x * 3);
+
+                if (originalIndex + 2 < imageData.Length && thumbnailIndex + 2 < thumbnailData.Length)
+                {
+                    thumbnailData[thumbnailIndex] = imageData[originalIndex]; // R
+                    thumbnailData[thumbnailIndex + 1] = imageData[originalIndex + 1]; // G
+                    thumbnailData[thumbnailIndex + 2] = imageData[originalIndex + 2]; // B
+                }
+            }
+        }
+
+        return thumbnailData;
+    }
     private static string GetFileNameWithoutExtension(string filename)
     {
         return Path.GetFileNameWithoutExtension(filename);
