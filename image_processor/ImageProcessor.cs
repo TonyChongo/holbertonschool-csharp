@@ -192,53 +192,39 @@ public class ImageProcessor
         {
             using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
-                // Read the image header to determine its dimensions
                 byte[] header = new byte[24];
                 fs.Read(header, 0, 24);
-
                 int width = header[12] + (header[13] << 8) + (header[14] << 16) + (header[15] << 24);
                 int height = header[16] + (header[17] << 8) + (header[18] << 16) + (header[19] << 24);
-
                 double aspectRatio = (double)width / height;
-
-                // Calculate the width for the thumbnail based on the aspect ratio
                 return (int)(targetHeight * aspectRatio);
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error while calculating thumbnail width for {filename}: {ex.Message}");
-            return -1; // Return a default value or handle the error accordingly
+            return -1;
         }
     }
 
     private static byte[] CreateThumbnail(byte[] imageData, int width, int height)
     {
-        // Placeholder logic: This code doesn't perform actual image resizing.
-
-        // Calculate the stride (number of bytes per row)
-        int stride = (width * 3 + 3) & ~3; // Assuming 24-bit RGB format
-
-        // Create a new byte array for the thumbnail image
+        int stride = (width * 3 + 3) & ~3;
         byte[] thumbnailData = new byte[stride * height];
-
-        // Placeholder: Copy the original image data to the thumbnail (no resizing)
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
                 int originalIndex = (y * width + x) * 3;
                 int thumbnailIndex = (y * stride + x * 3);
-
                 if (originalIndex + 2 < imageData.Length && thumbnailIndex + 2 < thumbnailData.Length)
                 {
-                    thumbnailData[thumbnailIndex] = imageData[originalIndex]; // R
-                    thumbnailData[thumbnailIndex + 1] = imageData[originalIndex + 1]; // G
-                    thumbnailData[thumbnailIndex + 2] = imageData[originalIndex + 2]; // B
+                    thumbnailData[thumbnailIndex] = imageData[originalIndex];
+                    thumbnailData[thumbnailIndex + 1] = imageData[originalIndex + 1];
+                    thumbnailData[thumbnailIndex + 2] = imageData[originalIndex + 2];
                 }
             }
         }
-
         return thumbnailData;
     }
     private static string GetFileNameWithoutExtension(string filename)
