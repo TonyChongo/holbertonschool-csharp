@@ -75,15 +75,21 @@ public class ImageProcessor
 
     private static byte[] ConvertToGrayscale(byte[] imageData)
     {
+        int bytesPerPixel = 3; // Assuming RGB format
+        int stride = imageData.Length / bytesPerPixel;
         byte[] grayscaleData = new byte[imageData.Length];
 
-        for (int i = 0; i < imageData.Length; i += 3)
+        for (int i = 0; i < imageData.Length; i += bytesPerPixel)
         {
-            // Calculate grayscale value for each pixel using the luminance formula
-            byte pixelValue = (byte)(0.299 * imageData[i] + 0.587 * imageData[i + 1] + 0.114 * imageData[i + 2]);
+            // Check if there are enough bytes for one pixel
+            if (i + bytesPerPixel <= imageData.Length)
+            {
+                // Calculate grayscale value for each pixel using the luminance formula
+                byte pixelValue = (byte)(0.299 * imageData[i] + 0.587 * imageData[i + 1] + 0.114 * imageData[i + 2]);
 
-            // Set the same grayscale value for all three color channels
-            grayscaleData[i] = grayscaleData[i + 1] = grayscaleData[i + 2] = pixelValue;
+                // Set the same grayscale value for all three color channels
+                grayscaleData[i] = grayscaleData[i + 1] = grayscaleData[i + 2] = pixelValue;
+            }
         }
 
         return grayscaleData;
