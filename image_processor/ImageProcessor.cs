@@ -129,14 +129,18 @@ public class ImageProcessor
 
         for (int i = 0; i < imageData.Length; i += 3)
         {
-            // Calculate grayscale value for each pixel using the luminance formula
-            double luminance = 0.299 * imageData[i] + 0.587 * imageData[i + 1] + 0.114 * imageData[i + 2];
+            // Ensure there are enough bytes for one pixel (RGB format)
+            if (i + 2 < imageData.Length)
+            {
+                // Calculate grayscale value for each pixel using the luminance formula
+                double luminance = 0.299 * imageData[i] + 0.587 * imageData[i + 1] + 0.114 * imageData[i + 2];
 
-            // Determine whether the pixel should be black or white based on the threshold
-            byte pixelValue = (luminance >= threshold) ? (byte)255 : (byte)0;
+                // Determine whether the pixel should be black or white based on the threshold
+                byte pixelValue = (luminance >= threshold) ? (byte)255 : (byte)0;
 
-            // Set the same black or white value for all three color channels
-            bwData[i] = bwData[i + 1] = bwData[i + 2] = pixelValue;
+                // Set the same black or white value for all three color channels
+                bwData[i] = bwData[i + 1] = bwData[i + 2] = pixelValue;
+            }
         }
 
         return bwData;
