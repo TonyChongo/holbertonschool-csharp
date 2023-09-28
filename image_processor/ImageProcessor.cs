@@ -178,7 +178,7 @@ public class ImageProcessor
         return bwData;
     }
 
-    private static int CalculateThumbnailWidth(string filename, int targetHeight)
+/*     private static int CalculateThumbnailWidth(string filename, int targetHeight)
     {
         try
         {
@@ -218,7 +218,7 @@ public class ImageProcessor
             }
         }
         return thumbnailData;
-    }
+    } */
     private static string GetFileNameWithoutExtension(string filename)
     {
         return Path.GetFileNameWithoutExtension(filename);
