@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
-using System.Linq;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
+using System.Threading;
 
 /// <summary>
 /// public class ImageProcessor
@@ -99,32 +97,26 @@ public class ImageProcessor
     /// <param name="height"></param>
     public static void Thumbnail(string[] filenames, int height)
     {
-        foreach (string filename in filenames)
+        Thread th = null;
+        if (filenames.Length > 1)
         {
-            try
-            {
-                using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite))
-                {
-                    long fileSize = fs.Length;
-                    byte[] imageData = new byte[fileSize];
-
-                    fs.Read(imageData, 0, (int)fileSize);
-
-                    // Calculate the width for the thumbnail based on the aspect ratio
-                    int width = CalculateThumbnailWidth(filename, height);
-
-                    // Create a new byte array for the thumbnail image
-                    byte[] thumbnailData = CreateThumbnail(imageData, width, height);
-
-                    // Save the thumbnail image with the "_th" suffix
-                    string outputFilename = $"{GetFileNameWithoutExtension(filename)}_th{GetFileExtension(filename)}";
-                    File.WriteAllBytes(outputFilename, thumbnailData);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error processing {filename}: {ex.Message}");
-            }
+            string[] tmp = new string[filenames.Length - 1];
+            Array.Copy(filenames, 1, tmp, 0, tmp.Length);
+            th = new Thread(() => Thumbnail(tmp, height));
+            th.Start();
+        }
+        if (filenames.Length > 0)
+        {
+            string name = filenames[0];
+            Bitmap bmp = new Bitmap(name);
+            Image image = bmp.GetThumbnailImage((int)(bmp.Width * (double)((double)height / (double)bmp.Height)), height, () => { return false; }, IntPtr.Zero);
+            int lastSlash = name.LastIndexOf('/') + 1;
+            int lastDot = name.LastIndexOf('.');
+            image.Save(name.Substring(lastSlash, lastDot - lastSlash) + "_th" + name.Substring(lastDot));
+        }
+        if (filenames.Length > 1)
+        {
+            th.Join();
         }
     }
 
