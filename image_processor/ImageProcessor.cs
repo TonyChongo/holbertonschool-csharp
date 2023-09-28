@@ -119,18 +119,20 @@ public class ImageProcessor
         {
             th.Join();
         }
-    } */
-        public static void Thumbnail(string[] filenames, int height)
+    }  */
+    public static void Thumbnail(string[] filenames, int height)
+    {
+        Parallel.ForEach(filenames, name =>
         {
-            Parallel.ForEach(filenames, name =>
-            {
-                Bitmap bmp = new Bitmap(name);
-                Image image = bmp.GetThumbnailImage((int)(bmp.Width * (double)((double)height / (double)bmp.Height)), height, () => false, IntPtr.Zero);
-                int lastSlash = name.LastIndexOf('/') + 1;
-                int lastDot = name.LastIndexOf('.');
-                image.Save(name.Substring(lastSlash, lastDot - lastSlash) + "_th" + name.Substring(lastDot));
-            });
-        }
+            Bitmap bmp = new Bitmap(name);
+            Image image = bmp.GetThumbnailImage((int)(bmp.Width * (double)((double)height / (double)bmp.Height)), height, () => false, IntPtr.Zero);
+
+            string newFilename = Path.GetFileNameWithoutExtension(name) + "_th" + Path.GetExtension(name);
+            string fullPath = Path.Combine(Path.GetDirectoryName(name), newFilename);
+
+            image.Save(fullPath);
+        });
+    }
 
     private static byte[] InvertColors(byte[] imageData)
     {
@@ -189,7 +191,7 @@ public class ImageProcessor
 
         return bwData;
     }
-
+/* 
     private static int CalculateThumbnailWidth(string filename, int targetHeight)
     {
         try
@@ -230,7 +232,7 @@ public class ImageProcessor
             }
         }
         return thumbnailData;
-    }
+    } */
     private static string GetFileNameWithoutExtension(string filename)
     {
         return Path.GetFileNameWithoutExtension(filename);
