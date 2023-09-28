@@ -138,33 +138,41 @@ public class ImageProcessor
     {
         Parallel.ForEach(filenames, name =>
         {
-            using (Image originalImage = Image.FromFile(name))
+            try
             {
-                int newWidth, newHeight;
-
-                // Calculate new dimensions while maintaining aspect ratio
-                if (originalImage.Height > height)
+                using (Image originalImage = Image.FromFile(name))
                 {
-                    double aspectRatio = (double)originalImage.Width / originalImage.Height;
-                    newHeight = height;
-                    newWidth = (int)(newHeight * aspectRatio);
-                }
-                else
-                {
-                    newWidth = originalImage.Width;
-                    newHeight = originalImage.Height;
-                }
+                    int newWidth, newHeight;
 
-                using (Bitmap thumbnail = new Bitmap(originalImage, newWidth, newHeight))
-                {
-                    string newFilename = Path.Combine(Path.GetDirectoryName(name),
-                        $"{Path.GetFileNameWithoutExtension(name)}_th{Path.GetExtension(name)}");
+                    // Calculate new dimensions while maintaining aspect ratio
+                    if (originalImage.Height > height)
+                    {
+                        double aspectRatio = (double)originalImage.Width / originalImage.Height;
+                        newHeight = height;
+                        newWidth = (int)(newHeight * aspectRatio);
+                    }
+                    else
+                    {
+                        newWidth = originalImage.Width;
+                        newHeight = originalImage.Height;
+                    }
 
-                    thumbnail.Save(newFilename, originalImage.RawFormat);
+                    using (Bitmap thumbnail = new Bitmap(originalImage, newWidth, newHeight))
+                    {
+                        string newFilename = Path.Combine(Path.GetDirectoryName(name),
+                            $"{Path.GetFileNameWithoutExtension(name)}_th{Path.GetExtension(name)}");
+
+                        thumbnail.Save(newFilename, originalImage.RawFormat);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error processing {name}: {ex.Message}");
             }
         });
     }
+
 
     private static byte[] InvertColors(byte[] imageData)
     {
