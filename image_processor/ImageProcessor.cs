@@ -1,8 +1,9 @@
 ﻿using System;
-using System.IO;
+using System.Diagnostics;
 using System.Drawing;
-using System.Threading;
+using System.IO;
 using System.Threading.Tasks;
+
 
 /// <summary>
 /// public class ImageProcessor
@@ -127,12 +128,13 @@ public class ImageProcessor
                 image.Save(fullPath);
             });
         } */
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="filenames"></param>
-        /// <param name="maxHeight"></param>
-    public static void Thumbnail(string[] filenames, int maxHeight)
+
+    /// <summary>
+    ///  public static void Thumbnail
+    /// </summary>
+    /// <param name="filenames"></param>
+    /// <param name="height"></param>
+    public static void Thumbnail(string[] filenames, int height)
     {
         Parallel.ForEach(filenames, name =>
         {
@@ -141,10 +143,10 @@ public class ImageProcessor
                 int newWidth, newHeight;
 
                 // Calculate new dimensions while maintaining aspect ratio
-                if (originalImage.Height > maxHeight)
+                if (originalImage.Height > height)
                 {
                     double aspectRatio = (double)originalImage.Width / originalImage.Height;
-                    newHeight = maxHeight;
+                    newHeight = height;
                     newWidth = (int)(newHeight * aspectRatio);
                 }
                 else
