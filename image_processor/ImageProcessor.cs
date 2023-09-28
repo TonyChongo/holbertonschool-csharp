@@ -117,7 +117,7 @@ public class ImageProcessor
                     byte[] thumbnailData = CreateThumbnail(imageData, width, height);
 
                     // Save the thumbnail image with the "_th" suffix
-                    string outputFilename = $"{GetFileNameWithoutExtension(filename)}_th.{GetFileExtension(filename)}";
+                    string outputFilename = $"{GetFileNameWithoutExtension(filename)}_th{GetFileExtension(filename)}";
                     File.WriteAllBytes(outputFilename, thumbnailData);
                 }
             }
