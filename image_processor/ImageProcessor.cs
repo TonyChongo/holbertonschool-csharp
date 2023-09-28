@@ -173,7 +173,6 @@ public class ImageProcessor
         });
     }
 
-
     private static byte[] InvertColors(byte[] imageData)
     {
         byte[] invertedData = new byte[imageData.Length];
