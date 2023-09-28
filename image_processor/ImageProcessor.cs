@@ -2,6 +2,7 @@
 using System.IO;
 using System.Drawing;
 using System.Threading;
+using System.Threading.Tasks;
 
 /// <summary>
 /// public class ImageProcessor
@@ -95,7 +96,7 @@ public class ImageProcessor
     /// </summary>
     /// <param name="filenames"></param>
     /// <param name="height"></param>
-    public static void Thumbnail(string[] filenames, int height)
+    /* public static void Thumbnail(string[] filenames, int height)
     {
         Thread th = null;
         if (filenames.Length > 1)
@@ -118,6 +119,19 @@ public class ImageProcessor
         {
             th.Join();
         }
+    } */
+    public static void Thumbnail(string[] filenames, int height)
+    {
+        Parallel.ForEach(filenames, name =>
+        {
+            Bitmap bmp = new Bitmap(name);
+            Image image = bmp.GetThumbnailImage((int)(bmp.Width * (double)((double)height / (double)bmp.Height)), height, () => false, IntPtr.Zero);
+
+            string newFilename = Path.GetFileNameWithoutExtension(name) + "_th" + Path.GetExtension(name);
+            string fullPath = Path.Combine(Path.GetDirectoryName(name), newFilename);
+
+            image.Save(fullPath);
+        });
     }
 
     private static byte[] InvertColors(byte[] imageData)
@@ -178,47 +192,47 @@ public class ImageProcessor
         return bwData;
     }
 
-/*     private static int CalculateThumbnailWidth(string filename, int targetHeight)
-    {
-        try
+    /*     private static int CalculateThumbnailWidth(string filename, int targetHeight)
         {
-            using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            try
             {
-                byte[] header = new byte[24];
-                fs.Read(header, 0, 24);
-                int width = header[12] + (header[13] << 8) + (header[14] << 16) + (header[15] << 24);
-                int height = header[16] + (header[17] << 8) + (header[18] << 16) + (header[19] << 24);
-                double aspectRatio = (double)width / height;
-                return (int)(targetHeight * aspectRatio);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error while calculating thumbnail width for {filename}: {ex.Message}");
-            return -1;
-        }
-    }
-
-    private static byte[] CreateThumbnail(byte[] imageData, int width, int height)
-    {
-        int stride = (width * 3 + 3) & ~3;
-        byte[] thumbnailData = new byte[stride * height];
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                int originalIndex = (y * width + x) * 3;
-                int thumbnailIndex = (y * stride + x * 3);
-                if (originalIndex + 2 < imageData.Length && thumbnailIndex + 2 < thumbnailData.Length)
+                using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
                 {
-                    thumbnailData[thumbnailIndex] = imageData[originalIndex];
-                    thumbnailData[thumbnailIndex + 1] = imageData[originalIndex + 1];
-                    thumbnailData[thumbnailIndex + 2] = imageData[originalIndex + 2];
+                    byte[] header = new byte[24];
+                    fs.Read(header, 0, 24);
+                    int width = header[12] + (header[13] << 8) + (header[14] << 16) + (header[15] << 24);
+                    int height = header[16] + (header[17] << 8) + (header[18] << 16) + (header[19] << 24);
+                    double aspectRatio = (double)width / height;
+                    return (int)(targetHeight * aspectRatio);
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while calculating thumbnail width for {filename}: {ex.Message}");
+                return -1;
+            }
         }
-        return thumbnailData;
-    } */
+
+        private static byte[] CreateThumbnail(byte[] imageData, int width, int height)
+        {
+            int stride = (width * 3 + 3) & ~3;
+            byte[] thumbnailData = new byte[stride * height];
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int originalIndex = (y * width + x) * 3;
+                    int thumbnailIndex = (y * stride + x * 3);
+                    if (originalIndex + 2 < imageData.Length && thumbnailIndex + 2 < thumbnailData.Length)
+                    {
+                        thumbnailData[thumbnailIndex] = imageData[originalIndex];
+                        thumbnailData[thumbnailIndex + 1] = imageData[originalIndex + 1];
+                        thumbnailData[thumbnailIndex + 2] = imageData[originalIndex + 2];
+                    }
+                }
+            }
+            return thumbnailData;
+        } */
     private static string GetFileNameWithoutExtension(string filename)
     {
         return Path.GetFileNameWithoutExtension(filename);
