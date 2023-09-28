@@ -96,7 +96,7 @@ public class ImageProcessor
     /// </summary>
     /// <param name="filenames"></param>
     /// <param name="height"></param>
-    public static void Thumbnail(string[] filenames, int height)
+/*     public static void Thumbnail(string[] filenames, int height)
     {
         Thread th = null;
         if (filenames.Length > 1)
@@ -119,20 +119,18 @@ public class ImageProcessor
         {
             th.Join();
         }
-    }
-    /*     public static void Thumbnail(string[] filenames, int height)
+    } */
+        public static void Thumbnail(string[] filenames, int height)
         {
             Parallel.ForEach(filenames, name =>
             {
                 Bitmap bmp = new Bitmap(name);
                 Image image = bmp.GetThumbnailImage((int)(bmp.Width * (double)((double)height / (double)bmp.Height)), height, () => false, IntPtr.Zero);
-
-                string newFilename = Path.GetFileNameWithoutExtension(name) + "_th" + Path.GetExtension(name);
-                string fullPath = Path.Combine(Path.GetDirectoryName(name), newFilename);
-
-                image.Save(fullPath);
+                int lastSlash = name.LastIndexOf('/') + 1;
+                int lastDot = name.LastIndexOf('.');
+                image.Save(name.Substring(lastSlash, lastDot - lastSlash) + "_th" + name.Substring(lastDot));
             });
-        } */
+        }
 
     private static byte[] InvertColors(byte[] imageData)
     {
