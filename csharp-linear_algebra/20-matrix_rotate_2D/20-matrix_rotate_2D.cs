@@ -1,43 +1,63 @@
-﻿using System;
+using System;
 
 /// <summary>
-/// Public class
+/// Represents operations on matrixes.
 /// </summary>
 class MatrixMath
 {
-    /// <summary>
-    /// public static
-    /// </summary>
-    /// <param name="matrix"></param>
-    /// <param name="angle"></param>
-    /// <returns></returns>
-    public static double[,] Rotate2D(double[,] matrix, double angle)
-    {
-        double[,] error = { { -1 } };
-        if (matrix.Length == 0 || matrix.GetLength(0) != 2 || matrix.GetLength(1) != 2)
-        {
-            return error;
-        }
+	/// <summary>
+	/// Rotate a 2D matrix.
+	/// </summary>
+	/// <param name="matrix">2D matrix to rotate</param>
+	/// <param name="angle">Angle in radian to rotate the </param>
+	/// <returns>A matrix containing -1 or the result of the rotation.</returns>
+	public static double[,] Rotate2D(double[,] matrix, double angle)
+	{
+		int rowLength = matrix.GetLength(0), colLength = matrix.GetLength(1);
 
-        double[,] result = new double[2, 2];
-        double[,] rotateMatrix = new double[2, 2] {
-            {Math.Cos(angle), Math.Sin(angle)},
-            {-Math.Sin(angle), Math.Cos(angle)}
-        };
+		if (rowLength != colLength)
+			return new double[,] { { -1 } };
 
-        for (int i = 0; i < matrix.GetLength(0); i++)
-        {
+		double cosAngle = Math.Cos(angle);
+		double sinAngle = Math.Sin(angle);
 
-            for (int j = 0; j < matrix.GetLength(1); j++)
-            {
-                result[i, j] = 0;
-                for (int k = 0; k < matrix.GetLength(0); k++)
-                {
-                    result[i, j] += Math.Round(matrix[i, k] * rotateMatrix[k, j], 2);
-                }
-                result[i, j] = Math.Round(result[i, j], 2);
-            }
-        }
-        return result;
-    }
+		double[,] rotationMatrix = new double[,]
+		{
+			{cosAngle, sinAngle},
+			{-sinAngle, cosAngle}
+		};
+
+		return Multiply(matrix, rotationMatrix);
+	}
+
+	/// <summary>
+	/// Multiply 2 matrixes.
+	/// </summary>
+	/// <param name="matrix1">First matrix</param>
+	/// <param name="matrix2">Second matrix</param>
+	/// <returns>A matrix with -1 if they can't be multiplied or the result.</returns>
+	public static double[,] Multiply(double[,] matrix1, double[,] matrix2)
+	{
+		int rowMatrix1 = matrix1.GetLength(0);
+		int colMatrix1 = matrix1.GetLength(1);
+		int rowMatrix2 = matrix2.GetLength(0);
+		int colMatrix2 = matrix2.GetLength(1);
+
+		if (colMatrix1 != rowMatrix2)
+			return new double[,] { { -1 } };
+
+		double[,] mul = new double[rowMatrix1, colMatrix2];
+
+		for (int i = 0; i < rowMatrix1; i++)
+		{
+			for (int j = 0; j < colMatrix2; j++)
+			{
+				double temp = 0;
+				for (int k = 0; k < colMatrix1; k++)
+					temp += matrix1[i, k] * matrix2[k, j];
+				mul[i, j] = Math.Round(temp, 2);
+			}
+		}
+		return mul;
+	}
 }
