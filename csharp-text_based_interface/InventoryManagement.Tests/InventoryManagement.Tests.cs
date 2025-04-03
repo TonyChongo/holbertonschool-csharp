@@ -1,29 +1,83 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using InventoryLibrary;
+using System;
+using System.IO;
+using ConsoleExectution;
+using NUnit.Framework;
 
-[TestClass]
-public class JSONStorageTests
+namespace InventoryManagement.Tests
 {
-    [TestMethod]
-    public void TestNewObject()
+    [TestFixture]
+    public class Tests
     {
-        // Arrange
-        JSONStorage storage = new JSONStorage();
-        Item item = new Item
+        private InventoryManager _inventoryManager;
+
+        [OneTimeSetUp]
+        public void Setup()
         {
-            id = "item1",
-            name = "Test Item",
-            description = "Test description",
-            price = 10.99f,
-            tags = new List<string> { "tag1", "tag2" }
-        };
+            _inventoryManager = new InventoryManager();
+        }
 
-        // Act
-        storage.New(item);
+        [Test]
+        public void TestShowInvalidClassName()
+        {
+            string expectedOutput = "Foo is not a valid object type";
+            string output = RunConsoleWithInput("Show Foo b07ab8e4-85cb-44d4-a016-2aae7ba49604");
+            Assert.AreEqual(expectedOutput, output.Trim());
 
-        // Assert
-        Assert.IsTrue(storage.All().ContainsKey("Item.item1"));
+            expectedOutput = "Foo is not a valid object type";
+            output = RunConsoleWithInput("Create Foo b07ab8e4-85cb-44d4-a016-2aae7ba49604");
+            Assert.AreEqual(expectedOutput, output.Trim());
+
+            expectedOutput = "Foo is not a valid object type";
+            output = RunConsoleWithInput("All Foo");
+            Assert.AreEqual(expectedOutput, output.Trim());
+
+            expectedOutput = "Foo is not a valid object type";
+            output = RunConsoleWithInput("Update Foo b07ab8e4-85cb-44d4-a016-2aae7ba49604");
+            Assert.AreEqual(expectedOutput, output.Trim());
+
+            expectedOutput = "Foo is not a valid object type";
+            output = RunConsoleWithInput("Delete Foo b07ab8e4-85cb-44d4-a016-2aae7ba49604");
+            Assert.AreEqual(expectedOutput, output.Trim());
+        }
+
+        [Test]
+        public void TestShowInvalidId()
+        {
+            const string expectedOutput = "Item [FalseID] could not be found";
+
+            string output = RunConsoleWithInput("Show Item FalseID");
+
+            Assert.AreEqual(expectedOutput, output.Trim());
+        }
+
+        [Test]
+        public void TestShowInvalidParameters()
+        {
+            string expectedOutput = "Invalid input format. Usage: Show [ClassName] [instance_id]";
+            string output = RunConsoleWithInput("Show");
+            Assert.AreEqual(expectedOutput, output.Trim());
+
+            expectedOutput = "Invalid input format. Usage: All or All [ClassName]";
+            output = RunConsoleWithInput("All Item ID");
+            Assert.AreEqual(expectedOutput, output.Trim());
+        }
+
+        private string RunConsoleWithInput(string input)
+        {
+            using (StringWriter consoleOutput = new StringWriter())
+            {
+                StringWriter consoleError = new StringWriter();
+
+                Console.SetOut(consoleOutput);
+                Console.SetError(consoleError);
+
+                using (StringReader consoleInput = new StringReader(input))
+                {
+                    Console.SetIn(consoleInput);
+                    _inventoryManager.LaunchConsole(false);
+                    return consoleOutput.ToString() + consoleError.ToString();
+                }
+            }
+        }
     }
-
-    // More test methods for other JSONStorage functionality...
 }
